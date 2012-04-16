@@ -1,10 +1,11 @@
 package org.aptivate.web.utils;
 
-import org.apache.log4j.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Timer
 {
-    private static final Logger s_LOG = Logger.getLogger(Timer.class);
+    private static final Logger s_LOG = LoggerFactory.getLogger(Timer.class);
     private long m_StartTime = 0;
     private String m_Name;
     

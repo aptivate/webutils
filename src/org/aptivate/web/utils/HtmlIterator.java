@@ -20,10 +20,11 @@ import javax.xml.parsers.SAXParserFactory;
 import junit.framework.ComparisonFailure;
 import junit.framework.TestCase;
 
-import org.apache.log4j.Logger;
 import org.aptivate.web.controls.SelectBox;
 import org.aptivate.web.utils.HtmlIterator.StartElementNode.LowMemoryMap;
 import org.htmlparser.util.Translate;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.xml.sax.InputSource;
 import org.xml.sax.Locator;
 import org.xml.sax.SAXParseException;
@@ -33,7 +34,7 @@ import org.xml.sax.helpers.DefaultHandler;
 public class HtmlIterator extends TestCase
 {
 	private List m_Tags = new ArrayList();
-	static final Logger s_LOG = Logger.getLogger(HtmlIterator.class);
+	static final Logger s_LOG = LoggerFactory.getLogger(HtmlIterator.class);
 	
 	interface Node
 	{
