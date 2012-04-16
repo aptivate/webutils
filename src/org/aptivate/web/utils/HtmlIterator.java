@@ -1254,6 +1254,14 @@ public class HtmlIterator extends TestCase
         }
     }
     
+    public void assertSelectTable(String name, List options, List selected,
+    		String[] checkBoxNames,
+            String[] checkBoxLabels) throws Exception
+    {
+    	assertSelectTable(name, options, selected, 
+    		new ColumnInterface[]{new SimpleColumn(name, options)},
+    		checkBoxNames, checkBoxLabels);
+    }
     public void assertSelectTable(String name, List options, List selected)
     throws Exception
     {
@@ -1284,7 +1292,15 @@ public class HtmlIterator extends TestCase
     }
     
     public void assertSelectTable(String name, List options, List selected,
-        ColumnInterface [] columns)
+            ColumnInterface [] columns) throws Exception
+    {
+    	assertSelectTable(name, options, selected, columns,
+    		new String[]{}, new String[]{});
+    }
+    
+    public void assertSelectTable(String name, List options, List selected,
+        ColumnInterface [] columns, String[] checkBoxNames,
+        String[] checkBoxLabels)
     throws Exception
     {
     	if (selected == null)
@@ -1365,6 +1381,27 @@ public class HtmlIterator extends TestCase
     			"!document.getElementById('" + name + "_en').checked; " +
     			"return true; } enable_" + name + "(); //");
     	assertEnd("script");
+    	
+    	assertEquals(checkBoxNames.length, checkBoxLabels.length);
+    	
+    	if (checkBoxNames.length > 0)
+    	{
+    		assertStart("div", new Attributes().clazz("checkboxes"));
+        	for (int i=0; i<checkBoxNames.length; i++)
+        	{
+        		assertEmpty("input", new Attributes()
+        			.type("checkbox")
+        			.name(checkBoxNames[i])
+        			.add("id", checkBoxNames[i])
+        			.value("1"));
+        		
+        		assertSimple("label", checkBoxLabels[i], new Attributes()
+        			.add("for", checkBoxNames[i]));
+        	}
+    		assertEnd("div");
+    	}
+    	
+    	
     	assertEnd("td");
     	assertEnd("tr");
     }

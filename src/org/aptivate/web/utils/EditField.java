@@ -405,18 +405,16 @@ public class EditField
     public String selectTable(String name, List options, List selected,
         boolean fixAmpersands, int maxLength)
     {
-        String [] requestSel = null;
-        
-        if (m_Request != null)
-        {
-        	requestSel = m_Request.getParameterValues(name); 
-        }
-        
-        return new SelectTable(name, requestSel, options, m_Request)
-        	.toString();
+        return selectTable(name, options).toString();
     }
 
     public SelectTable selectTable(String name, List options)
+    {
+    	return selectTable(name, options, new String[] {}, new String[] {});
+    }
+
+    public SelectTable selectTable(String name, List options,
+    		String[] checkBoxNames, String[] checkBoxLabels)
     {
     	String [] requestSel = null;
 
@@ -425,9 +423,10 @@ public class EditField
     		requestSel = m_Request.getParameterValues(name); 
     	}
 
-    	return new SelectTable(name, requestSel, options, m_Request);
+    	return new SelectTable(name, requestSel, options, checkBoxNames, 
+    		checkBoxLabels, m_Request);
     }
-
+    
     /**
      * Returns the HTML code for a checkbox edit field in the main table on the
      * Edit/Export page.
