@@ -19,9 +19,12 @@ public class SelectTable extends FormControl
 	private List m_RequestSelection, m_DefaultSelection;
 	private List m_Options;
 	private HttpServletRequest m_Request;
+	private String[] m_CheckBoxNames;
+	private String[] m_CheckBoxLabels;
 	
     public SelectTable(String name, String [] requestSelection,
-    	List options, HttpServletRequest request)
+    	List options, String[] checkBoxNames, String[] checkBoxLabels, 
+    	HttpServletRequest request)
     {
         super(name);
         if (requestSelection != null)
@@ -35,6 +38,8 @@ public class SelectTable extends FormControl
         }
         m_Options = options;
         m_Request = request;
+        m_CheckBoxNames = checkBoxNames;
+        m_CheckBoxLabels = checkBoxLabels;
     }
     
     public SelectTable setDefaultSelection(List selected)
@@ -112,6 +117,18 @@ public class SelectTable extends FormControl
 			"!document.getElementById('" + getName() + "_en').checked;\n" +
 			"return true; }\n" +
 			"enable_" + getName() + "(); //]]></script>\n");
+        
+        if (m_CheckBoxNames.length > 0)
+        {
+        	html.append("<div class=\"checkboxes\">");
+            for (int i=0; i < m_CheckBoxNames.length; i++)
+            {
+            	html.append(new CheckBox(m_CheckBoxNames[i], m_CheckBoxLabels[i],
+            			"1", false));
+            }
+            html.append("</div>");
+        }
+        
         html.append("</td>\n</tr>\n</table>\n");
         
         return html.toString();

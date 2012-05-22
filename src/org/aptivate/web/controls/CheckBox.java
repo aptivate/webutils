@@ -13,17 +13,28 @@ public class CheckBox extends StringValuedControl
 {
     public static final String DEFAULT_CHECKED_VALUE = "1";
     private String m_CheckedValue;
+    private String m_Label;
+    
     public CheckBox(String name, String checkedValue,
     		HttpServletRequest request)
     {
     	super(name, request == null ? null : request.getParameter(name));
     	m_CheckedValue = checkedValue;
     }
+
+    public CheckBox(String name, String label, String checkedValue, boolean paramValue)
+    {
+    	super(name, paramValue ? checkedValue : null);
+    	m_CheckedValue = checkedValue;
+    	m_Label = label;
+    }
+    
     public CheckBox(String name, String checkedValue, boolean paramValue)
     {
     	super(name, paramValue ? checkedValue : null);
     	m_CheckedValue = checkedValue;
     }
+    
     public CheckBox(String name, boolean paramValue)
     {
     	this(name, DEFAULT_CHECKED_VALUE, paramValue);
@@ -36,10 +47,13 @@ public class CheckBox extends StringValuedControl
     public String toString()
     {
         StringBuffer html = new StringBuffer();
+        
+        String name = EditField.attrib(getName());
+        
         html.append("<input type=\"checkbox\" name=\"")
-        	.append(EditField.attrib(getName()))
+        	.append(name)
         	.append("\" id=\"")
-        	.append(EditField.attrib(getName()))
+        	.append(name)
         	.append("\" value=\"")
         	.append(EditField.attrib(m_CheckedValue))
         	.append("\"");
@@ -49,6 +63,16 @@ public class CheckBox extends StringValuedControl
         }
         appendAttributes(html);
         html.append(" />");
+
+        if (m_Label != null)
+        {
+        	html.append("<label for=\"")
+        		.append(name)
+        		.append("\">")
+        		.append(m_Label)
+        		.append("</label>\n");
+        }
+        
         return html.toString();
     }
     
