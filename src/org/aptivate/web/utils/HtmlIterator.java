@@ -919,7 +919,7 @@ public class HtmlIterator extends TestCase
 		if (text.equals("")) return;
 		// httpunit doesn't consistantly remove or keep nbsp entities
 		// if (text.equals("&nbsp;")) return;
-		text = text.replaceAll("\\s+", " ");
+		text = text.replaceAll("\\s+", " ").trim();
 	    Node node = next();
 	    node.lazyAssertEquals("Text: " + text, node.toShortString());
 	    TextNode textNode = (TextNode)node;
@@ -1466,10 +1466,13 @@ public class HtmlIterator extends TestCase
             
             StartElementNode start = assertStart("option", new String[][]{
                 new String[]{"value", getRowValue(row)}});
-            
-            start.assertAttribute("selected", 
+
+            if(value != null && !value.equals("")) 
+            {
+            	start.assertAttribute("selected", 
             		getRowValue(row).equals(value) ? "selected" : null,	
                 	name);
+            }
             
             if (getRowLabel(row).length() > 0)
             {
