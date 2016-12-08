@@ -33,6 +33,10 @@ public class ReadOnlyField extends StringValuedControl
     }
     public void assertField(HtmlIterator i)
     {
+    	String value = getValue();
+    	if(value == null) {
+    		return;
+    	}
     	i.assertInput(getName(), getValue());
     	i.assertText(getValue());
     }
