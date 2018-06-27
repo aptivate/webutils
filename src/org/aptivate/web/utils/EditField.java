@@ -8,6 +8,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 
 import org.aptivate.web.controls.CheckBox;
+import org.aptivate.web.controls.DateField;
 import org.aptivate.web.controls.HiddenField;
 import org.aptivate.web.controls.ReadOnlyField;
 import org.aptivate.web.controls.SelectBox;
@@ -142,6 +143,27 @@ public class EditField
     		return new TextField(name, m_Request.getParameter(name));
     	}
     }
+    
+    /**
+     * Returns a DateField object which can generate HTML code for a 
+     * date field in an HTML form. 
+     * @param name the name of the field.
+     * @param defaultValue the default value of the field, used unless
+     * overridden by a parameter in the request.
+     * @return a new DateField object
+     */
+    public DateField date(String name)
+    {
+    	if (m_Request == null)
+    	{
+    		return new DateField(name, null);
+    	}
+    	else
+    	{
+    		return new DateField(name, m_Request.getParameter(name));
+    	}
+    }
+    
 
     /**
      * Returns a ReadOnlyField object which can generate HTML code for a 
